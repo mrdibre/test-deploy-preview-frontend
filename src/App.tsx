@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>Vite + React / changed</h1>
       <div className="card">
         <button onClick={fetchMessage} style={{ marginLeft: '10px' }}>
           Fetch Server Message

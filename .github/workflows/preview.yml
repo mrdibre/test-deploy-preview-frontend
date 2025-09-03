@@ -3,10 +3,15 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
 
+# 👇 grant OIDC + allow checkout
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   upsert:
     if: github.event.action != 'closed'
-    uses: mrdibre/test-deploy-preview-action@1.0
+    uses: mrdibre/test-deploy-preview-action/.github/workflows/action.yml@master
     with:
       state: upsert
       preview_id: ${{ github.head_ref }}
@@ -22,7 +27,7 @@ jobs:
 
   teardown:
     if: github.event.action == 'closed'
-    uses: mrdibre/test-deploy-preview-action@1.0
+    uses: mrdibre/test-deploy-preview-action/.github/workflows/action.yml@master
     with:
       state: teardown
       preview_id: ${{ github.head_ref }}
