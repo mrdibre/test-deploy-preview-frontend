@@ -6,7 +6,7 @@ on:
 jobs:
   upsert:
     if: github.event.action != 'closed'
-    uses: mrdibre/test-deploy-preview-action/.github/workflows/action.yml@1.0
+    uses: mrdibre/.github/workflows/action.yml@main
     with:
       state: upsert
       preview_id: ${{ github.head_ref }}
@@ -22,7 +22,7 @@ jobs:
 
   teardown:
     if: github.event.action == 'closed'
-    uses: mrdibre/test-deploy-preview-action/.github/workflows/action.yml@1.0
+    uses: mrdibre/.github/workflows/action.yml@main
     with:
       state: teardown
       preview_id: ${{ github.head_ref }}
