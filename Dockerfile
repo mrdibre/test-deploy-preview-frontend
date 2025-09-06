@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# Build stage
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
@@ -14,8 +15,23 @@ COPY . .
 # Build the application
 RUN pnpm build
 
-# Expose port 4173 (Vite preview default)
-EXPOSE 4173
+# Production stage
+FROM nginx:alpine
 
-# Run preview server
-CMD ["pnpm", "preview", "--host", "0.0.0.0"]
+# Copy built files
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Create nginx config for SPA
+RUN echo 'server { \
+    listen 80; \
+    server_name localhost; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
