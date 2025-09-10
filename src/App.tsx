@@ -3,7 +3,9 @@ import './App.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
-console.log('API_URL:', API_URL)
+console.log(import.meta);
+console.log(import.meta.env);
+console.log('API_URL:', API_URL);
 
 function App() {
   const [serverMessage, setServerMessage] = useState('')
